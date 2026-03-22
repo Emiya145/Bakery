@@ -6,6 +6,9 @@ from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+LOG_DIR = BASE_DIR / 'logs'
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+
 # Security
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-me-in-production')
 DEBUG = config('DEBUG', default=False, cast=bool)
@@ -151,7 +154,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': BASE_DIR / 'logs' / 'bakery.log',
+            'filename': LOG_DIR / 'bakery.log',
             'maxBytes': 1024*1024*5,  # 5MB
             'backupCount': 5,
             'formatter': 'verbose',
@@ -159,7 +162,7 @@ LOGGING = {
         'error_file': {
             'level': 'ERROR',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': BASE_DIR / 'logs' / 'errors.log',
+            'filename': LOG_DIR / 'errors.log',
             'maxBytes': 1024*1024*5,
             'backupCount': 5,
             'formatter': 'verbose',

@@ -6,7 +6,7 @@ import os
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['yourusername.pythonanywhere.com']
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', '').split(',') if h.strip()]
 
 # Database - MySQL for production
 DATABASES = {
@@ -15,7 +15,7 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': 'yourusername.mysql.pythonanywhere-services.com',
+        'HOST': os.environ.get('DB_HOST'),
         'OPTIONS': {
             'charset': 'utf8mb4',
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -34,16 +34,12 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 # Static files for PythonAnywhere
-STATIC_ROOT = '/home/yourusername/bakery/static'
-MEDIA_ROOT = '/home/yourusername/bakery/media'
-
-# Logging paths for PythonAnywhere
-LOGGING['handlers']['file']['filename'] = '/home/yourusername/logs/bakery.log'
-LOGGING['handlers']['error_file']['filename'] = '/home/yourusername/logs/errors.log'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # CORS settings for production
 CORS_ALLOWED_ORIGINS = [
-    "https://yourusername.pythonanywhere.com",
+    origin.strip() for origin in os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',') if origin.strip()
 ]
 
 # Email configuration for production
