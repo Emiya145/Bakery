@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
-from django.db.models import Sum, Q
+from django.db.models import Sum, Q, F
 
 from .models import Location, Ingredient, Stock, StockMovement
 from .serializers import (
@@ -88,7 +88,7 @@ class StockViewSet(viewsets.ModelViewSet):
         low_stock = self.request.query_params.get('low_stock')
         if low_stock and low_stock.lower() == 'true':
             queryset = queryset.filter(
-                quantity__lt=models.F('ingredient__reorder_level')
+                quantity__lt=F('ingredient__reorder_level')
             )
         
         # Filter by expiring soon

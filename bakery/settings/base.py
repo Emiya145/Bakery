@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     
     # Third party
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     
     # Local apps
@@ -201,6 +202,8 @@ X_FRAME_OPTIONS = 'DENY'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 
 # Default auto-primary key type

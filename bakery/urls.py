@@ -6,22 +6,28 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken import views as auth_views
 from inventory.views import (
     LocationViewSet, IngredientViewSet, StockViewSet,
     StockMovementViewSet, ProductionViewSet
 )
+from users.views import UserViewSet, CurrentUserView
 
 # Create a single router for all API endpoints
 router = DefaultRouter()
+router.include_format_suffixes = False
 router.register(r'locations', LocationViewSet, basename='location')
 router.register(r'ingredients', IngredientViewSet, basename='ingredient')
 router.register(r'stock', StockViewSet, basename='stock')
 router.register(r'movements', StockMovementViewSet, basename='stockmovement')
 router.register(r'production', ProductionViewSet, basename='production')
+router.register(r'users', UserViewSet, basename='user')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/auth/login/', auth_views.obtain_auth_token),
+    path('api/auth/me/', CurrentUserView.as_view()),
     path('api-auth/', include('rest_framework.urls')),
 ]
 
