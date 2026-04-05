@@ -33,13 +33,22 @@ SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-# Static files for PythonAnywhere
+# Static files for PythonAnywhere (Vite build output is collected into STATIC_ROOT)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+    BASE_DIR / 'frontend' / 'dist',
+]
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # CORS settings for production
 CORS_ALLOWED_ORIGINS = [
     origin.strip() for origin in os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',') if origin.strip()
+]
+
+# HTTPS origins for CSRF (Django 4+); set e.g. https://youruser.pythonanywhere.com
+CSRF_TRUSTED_ORIGINS = [
+    o.strip() for o in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',') if o.strip()
 ]
 
 # Email configuration for production

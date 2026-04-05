@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, EmailValidator
-from django.db.models import Sum, Avg
+from django.db.models import Avg, F, Sum
 
 
 class Supplier(models.Model):
