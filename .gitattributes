@@ -1,0 +1,2 @@
+# Bash on Linux/PythonAnywhere rejects CRLF; scripts break on `set -o pipefail` etc.
+*.sh text eol=lf

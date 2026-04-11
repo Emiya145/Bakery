@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Run this script ON PythonAnywhere (Bash console), not on your PC.
+# Use: bash pythonanywhere_setup.sh   (do not use `sh`; it is not bash.)
 # Prerequisites (one-time): Databases tab → Initialize MySQL and set your MySQL password.
 #
 # Required environment variables for this session:
@@ -11,6 +12,10 @@
 #   export PA_USER='anirden2020'
 #   export SECRET_KEY='...'   # generated if omitted
 #
+if [ -z "${BASH_VERSION:-}" ]; then
+  echo "ERROR: Run with bash, not sh. Example: bash $0" >&2
+  exit 1
+fi
 set -euo pipefail
 
 PA_USER="${PA_USER:-anirden2020}"
